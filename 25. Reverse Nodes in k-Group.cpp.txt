@@ -1,0 +1,35 @@
+class Solution {
+public:
+    // đảo danh sách từ a đến b (b không 포함)
+    ListNode* reverse(ListNode* a, ListNode* b) {
+        ListNode* prev = nullptr;
+        ListNode* cur = a;
+
+        while (cur != b) {
+            ListNode* next = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev; // head mới
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* a = head;
+        ListNode* b = head;
+
+        // kiểm tra đủ k node không
+        for (int i = 0; i < k; i++) {
+            if (b == nullptr) return head;
+            b = b->next;
+        }
+
+        // đảo đoạn [a, b)
+        ListNode* newHead = reverse(a, b);
+
+        // a trở thành tail sau khi đảo
+        a->next = reverseKGroup(b, k);
+
+        return newHead;
+    }
+};
