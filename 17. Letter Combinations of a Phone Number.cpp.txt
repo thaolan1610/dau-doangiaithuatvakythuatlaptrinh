@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<string> res;
+    vector<string> mp = {
+        "", "", "abc", "def", "ghi",
+        "jkl", "mno", "pqrs", "tuv", "wxyz"
+    };
+
+    void backtrack(string& digits, int idx, string current) {
+        if (idx == digits.size()) {
+            res.push_back(current);
+            return;
+        }
+
+        string letters = mp[digits[idx] - '0'];
+        for (char c : letters) {
+            backtrack(digits, idx + 1, current + c);
+        }
+    }
+
+    vector<string> letterCombinations(string digits) {
+        if (digits.empty()) return {};
+        backtrack(digits, 0, "");
+        return res;
+    }
+};

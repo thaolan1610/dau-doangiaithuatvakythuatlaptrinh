@@ -1,0 +1,32 @@
+#include <stack>
+using namespace std;
+
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> st;
+
+        for (char c : s) {
+            // nếu là ngoặc mở
+            if (c == '(' || c == '{' || c == '[') {
+                st.push(c);
+            } 
+            else {
+                // gặp ngoặc đóng mà stack rỗng
+                if (st.empty()) return false;
+
+                char top = st.top();
+                st.pop();
+
+                if ((c == ')' && top != '(') ||
+                    (c == '}' && top != '{') ||
+                    (c == ']' && top != '[')) {
+                    return false;
+                }
+            }
+        }
+
+        // stack phải rỗng thì mới hợp lệ
+        return st.empty();
+    }
+};
